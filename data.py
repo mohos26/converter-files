@@ -31,62 +31,35 @@ def get_type(name: str):
 				d[key]
 	return None
 
-types = ["csv", "text", "excel", "json", "sql", "database", "xml"]
-check = 0
-while (1):
-	type_entered = input("enter the type of the file entered: ")
-	for item in types:
-		if type_entered.lower().strip() == item:
-			check = 1
-			break
-	if check == 1:
-		break
-	print(f"the supported types are: csv, sql, text (.txt), database, excel, json, xml.")
-	print(f"if you are unsure about the type of file you have, please choose the auto-detect option")
-
-
-path = input("enter the path of the file to convert(if it is in this directory just enter it's name): ")
-if '/' in path:
+def convert(type_entered :str, type_to_convert: str, path: str, name_of_converted: str):	
+	types = ["csv", "text", "excel", "json", "sql", "database", "xml"]
 	splitted = path.split('/')
 	new_path = splitted[-1]
-else :
-	new_path = path
-our_type = get_type(new_path)
-if our_type == None:
-	print("Not a valid type")
-else :
-	type_entered = our_type
-check = 0
-while (1):
-	type_to_convert = input("enter the type of the file to convert to: ")
-	for item in types:
-		if type_to_convert.lower() == item:
-			check = 1
-			break
-	if check == 1:
-		break
-	print(f"the supported types are: csv, sql, text (.txt), database, excel, json, xml.")
-name_of_converted = input("enter the name of the desired file: ")
-if type_entered == "csv" or type_entered == "text":
-	dt = pd.read_csv(path)
-elif type_entered == "xml":
-	dt = pd.read_xml(path)
-elif type_entered == "json":
-	dt = pd.read_json(path)
-elif type_entered == "excel":
-	dt = pd.read_excel(path)
-elif type_entered == "sql":
-	dt = pd.read_sql_table(path)
+	our_type = get_type(new_path)
+	if our_type == None:
+		print("Not a valid type")
+	else :
+		type_entered = our_type
+	if type_entered == "csv" or type_entered == "text":
+		dt = pd.read_csv(path)
+	elif type_entered == "xml":
+		dt = pd.read_xml(path)
+	elif type_entered == "json":
+		dt = pd.read_json(path)
+	elif type_entered == "excel":
+		dt = pd.read_excel(path)
+	elif type_entered == "sql":
+		dt = pd.read_sql_table(path)
 
-if type_to_convert == "csv" or type_to_convert == "text":
-	dt.to_csv(name_of_converted)
-elif type_to_convert == "xml":
-	dt.to_xml(name_of_converted)
-elif type_to_convert == "json":
-	dt.to_json(name_of_converted)
-elif type_to_convert == "excel":
-	dt.to_excel(name_of_converted)
-elif type_to_convert == "sql":
-	dt.to_sql(name_of_converted)
+	if type_to_convert == "csv" or type_to_convert == "text":
+		dt.to_csv(name_of_converted)
+	elif type_to_convert == "xml":
+		dt.to_xml(name_of_converted)
+	elif type_to_convert == "json":
+		dt.to_json(name_of_converted)
+	elif type_to_convert == "excel":
+		dt.to_excel(name_of_converted)
+	elif type_to_convert == "sql":
+		dt.to_sql(name_of_converted)
 
 
