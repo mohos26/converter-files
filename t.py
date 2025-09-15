@@ -1,5 +1,5 @@
-from tkinter import ttk
 from tkinter import *
+from tkinter import ttk
 from time import sleep
 from tkinter.filedialog import *
 
@@ -21,6 +21,7 @@ y = (screen_height // 2) - (window_height // 2)
 root.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
 root.minsize(window_width, window_height)
+root.maxsize(window_width, window_height)
 
 root.title(program_name)
 
@@ -33,13 +34,13 @@ add_file_button.place(relx=0.5, rely=0.5, anchor=CENTER)
 go_button = Button(root, text="Go", font=("Arial", 16, "bold"), width=7, height=4)
 go_button.place(relx=1.0, rely=0.0, anchor=NE, x=-5, y=5)
 
-types = "json", "csv", "exel", "sql"
+types = "Json", "Csv", "Excel", "Sql"
 types_file_replace = ttk.Combobox(root, values=types, state='readonly', width=10, font=("Arial", 22))
-types_file_replace.set("slect type")
+types_file_replace.set("select type")
 types_file_replace.bind("<<ComboboxSelected>>", lambda arg: print(types_file_replace.get()))
 types_file_replace.place(relx=0.0, rely=0.0, anchor=NW, x=5, y=5)
 
-types = "auto detect", "json", "csv", "exel", "sql"
+types = "auto-detect", "json", "csv", "excel", "sql", "xml", "txt"
 types_file_entry = ttk.Combobox(root, values=types, state='readonly', width=15, font=("Arial", 22))
 types_file_entry.set(types[0])
 types_file_entry.bind("<<ComboboxSelected>>", lambda arg: print(types_file_entry.get()))
