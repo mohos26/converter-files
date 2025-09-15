@@ -1,25 +1,16 @@
 import pandas as pd
 import sqlite3
 
-# type_enterd = input("enter the type of the file entered: ")
-# path = input("enter the path of the file to convert(if it is in this directory just enter it's name): ")
-# type_to_convert, name_of_converted = input("enter the type of the file to convert to and the name of the desired file:(please enter two names and between them a space) ").split(max=2)
-# if type_entered.replace(".", "").lower() == "csv":
-# 	s = input("if the seperator is not (,) please enter the seperator in your file: ")
-# 	h = int(input("if there is a header in the file, enter it's row, the index of the first row is 0: "))
-# 	if (s != ""):
-# 		if h == "":
-# 			dt = pd.read_csv(path, sep=s, header=None, na_values=["NA", ""], parse_dates=[Dates], dayfirst=True)
-# 		else :
-# 			dt = pd.read_csv(path, sep=s, header=h, na_values=["NA", ""], parse_dates=[Dates], dayfirst=True)
-# 	else :
-# 		if h == "":
-# 			dt = pd.read_csv(path, header=None, na_values=["NA", ""], parse_dates=[Dates], dayfirst=True)
-# 		else :
-# 			dt = pd.read_csv(path, header=h, na_values=["NA", ""], parse_dates=[Dates], dayfirst=True)
-# if type_entered.replace(".", "").lower() == "xlsx" or type_entered.replace(".", "").lower() == "xls" or type_entered.lower() == "excel":)
+
 def get_type(name: str):
-	d = {"csv":"csv", ("xls", "xlsx", "xlsm", "xlsb", "odf", "ods", "odt"): "excel", "txt":"text", "json":"json", "xml":"xml", ("sqlite", "sqlite3", "db"):"sql"}
+	d = {
+		"csv": "csv",
+		("xls", "xlsx", "xlsm", "xlsb", "odf", "ods", "odt"): "excel",
+		"txt": "text",
+		"json": "json",
+		"xml": "xml",
+		("sqlite", "sqlite3", "db"): "sql"
+	}
 	splitted = name.split('.')
 	for key in d:
 		if type(key) is tuple:
@@ -28,10 +19,11 @@ def get_type(name: str):
 					return d[key]
 		else :
 			if splitted[1] == key:
-				d[key]
+				return d[key]
 	return None
 
-def convert(type_entered :str, type_to_convert: str, path: str, name_of_converted: str):	
+
+def convert(type_entered :str, type_to_convert: str, path: str, name_of_converted: str):
 	types = ["csv", "text", "excel", "json", "sql", "database", "xml"]
 	splitted = path.split('/')
 	new_path = splitted[-1]
@@ -47,11 +39,13 @@ def convert(type_entered :str, type_to_convert: str, path: str, name_of_converte
 	elif type_entered == "json":
 		dt = pd.read_json(path)
 	elif type_entered == "excel":
+		print("entered")
 		dt = pd.read_excel(path)
 	elif type_entered == "sql":
 		dt = pd.read_sql_table(path)
 
 	if type_to_convert == "csv" or type_to_convert == "text":
+		print("here", name_of_converted)
 		dt.to_csv(name_of_converted)
 	elif type_to_convert == "xml":
 		dt.to_xml(name_of_converted)
